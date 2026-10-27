@@ -1,0 +1,19 @@
+services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: linc
+      POSTGRES_PASSWORD: linc
+      POSTGRES_DB: linc
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U linc"]
+      interval: 3s
+      retries: 10
+
+volumes:
+  pgdata:
